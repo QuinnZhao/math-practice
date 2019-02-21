@@ -9,6 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from constants import TYPES
 
+
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -105,15 +106,13 @@ class Ui_Form(object):
         Form.setWindowTitle(_translate("Form", "一年级数学加减口算出题系统"))
         self.label.setText(_translate("Form", "题型"))
         for index, value in enumerate(self.types):
-            self.cbbType.setItemText(index, _translate("Form" , value))
-            
+            self.cbbType.setItemText(index, _translate("Form", value))
+
         self.label_2.setText(_translate("Form", "题目数"))
-        
+
         self.cbbNum.setItemText(0, _translate("Form", "50"))
         self.cbbNum.setItemText(1, _translate("Form", "100"))
-        
+
         self.btnGen.setText(_translate("Form", "出题"))
         self.btnExport.setText(_translate("Form", "导出"))
         self.teItems.setDocumentTitle(_translate("Form", "一年级10以内加减混合口算练习题"))
-        
-

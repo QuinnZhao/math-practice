@@ -1,4 +1,4 @@
-from constants import OPERATIONS_DICT_1
+from constants import OPERATIONS_DICT
 
 
 class Operations():
@@ -7,14 +7,14 @@ class Operations():
         # self.operation = operations_dict[operation][0]
         self.operation = operation
         # self.tempalte_tuple = operations_dict[operation][4]
-        self.template_tuple = OPERATIONS_DICT_1[operation][4]
+        self.template_tuple = OPERATIONS_DICT[operation][4]
 
         # self.lower_limit = operations_dict[operation][1]
-        self.lower_limit = OPERATIONS_DICT_1[operation][1]
+        self.lower_limit = OPERATIONS_DICT[operation][1]
         # self.upper_limit = operations_dict[operation][2]
-        self.upper_limit = OPERATIONS_DICT_1[operation][2]
+        self.upper_limit = OPERATIONS_DICT[operation][2]
         # self.parameters_num = operations_dict[operation][3]
-        self.parameters_num = OPERATIONS_DICT_1[operation][3]
+        self.parameters_num = OPERATIONS_DICT[operation][3]
         self.formula_number = formula_number
         self.formula_list = []
         self.operations_dict = {}
@@ -25,7 +25,7 @@ class Operations():
         return self.formula_list.copy()
 
     def init_operation_dict(self):
-        for key, value in OPERATIONS_DICT_1.items():
+        for key, value in OPERATIONS_DICT.items():
             self.operations_dict[key] = value[0]
             if value[0] == 'add':
                 self.operations_dict[key] = self.gen_add
@@ -149,7 +149,7 @@ class Operations():
                     first_num, second_num, third_num)
 
     def gen_mix_2(self):
-        if not self.parameters_num == 2:
+        if not self.parameters_num == 2 or len(self.template_tuple) < 2:
             return
 
         from random import randint, shuffle
@@ -173,23 +173,31 @@ class Operations():
         from random import randint, shuffle
 
         self.formula_list = []
-        total = int(self.formula_number)
+        rest = int(self.formula_number)
 
-        if not self.template_tuple[0]:
-            serial_add_num = randint(0, total)
+        if self.template_tuple[0]:
+            serial_add_num = randint(0, rest)
         else:
             serial_add_num = 0
-        if not self.template_tuple[1]:
-            serial_sub_num = randint(0, total - serial_add_num)
+
+        rest -= serial_add_num
+
+        if rest > 0 and self.template_tuple[1]:
+            serial_sub_num = randint(0, rest)
         else:
             serial_sub_num = 0
-        if total - serial_add_num - serial_sub_num > 0:
-            mix_add_sub_num = total - serial_add_num - serial_sub_num
+
+        rest -= serial_sub_num
+
+        if rest > 0 and self.template_tuple[2]:
+            mix_add_sub_num = randint(0, rest)
         else:
             mix_add_sub_num = 0
-        if total - serial_add_num - serial_sub_num - mix_add_sub_num > 0:
-            mix_sub_add_num = total - serial_add_num - serial_sub_num \
-             - mix_add_sub_num
+
+        rest -= mix_add_sub_num
+
+        if rest > 0 and self.template_tuple[3]:
+            mix_sub_add_num = rest
         else:
             mix_sub_add_num = 0
 
